@@ -1,13 +1,14 @@
 import { Controller, Get,Post,Query,Body,Req,Res } from '@nestjs/common';
 import { AppService } from './app.service';
-
+import { User } from './auth/decorators/user.decorator';
+import { userInfo } from 'os';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}//هنا طبقنا مفهوم depedndency injection
 
-  @Get() //request type
-  getHello(): string { //this is the end-point. 
-    return this.appService.getHello();
+  @Get()
+  async getHello(@User() user): Promise<string> {
+    return await this.appService.getHello(user.id);
   }
   @Get("/test")
   sum():number{
@@ -30,4 +31,5 @@ export class AppController {
   sayHello(@Body()nothing){
     return this.appService.nothing(nothing)
   }
+
 }

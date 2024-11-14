@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { UserService } from './user/user.service';
+import { UUID } from 'crypto';
+import { User } from './user/entities/user.entity';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+  constructor(private userService: UserService) {}
+  
   sum():number{
     return 10
   }
@@ -20,6 +22,10 @@ export class AppService {
   }
   nothing(any){
     return any
+  }
+  async getHello(userId: UUID): Promise<string> {
+    const user: User = await this.userService.findOneById(userId);
+    return `Hello ${user.firstName}!`;
   }
 }
 

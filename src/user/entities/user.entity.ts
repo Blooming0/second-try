@@ -1,19 +1,20 @@
 import { Entity,PrimaryGeneratedColumn,Column } from "typeorm";
+import { UUID } from 'crypto';
 
-@Entity()
+@Entity({ name: 'user' })
 export class User {
     @PrimaryGeneratedColumn()
-    id:number;
+    id?:UUID;
 
     @Column()
-    name: string;
-  
-    @Column()
-    age: number;
-    
-    @Column()
-    email:string
+  email: string;
 
-    @Column()
-    password:string 
+  @Column()
+  password: string;
+
+  @Column()
+  firstName: string;
+
+  @Column()
+  lastName: string;
 }

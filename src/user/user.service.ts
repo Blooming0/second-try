@@ -3,28 +3,59 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
-
+import {  Repository,UpdateResult  } from 'typeorm';
+import { UUID } from 'crypto';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User)private userRepo: Repository<User>){}
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  
+  // async create(createUserDto: CreateUserDto) {
+  //   const created =  await this.userRepo.save(createUserDto);
+  //   return created;
+  // }
 
   findAll() {
-    return `This action returns all user`;
+    return this.userRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // async update(id: number, updateUserDto: UpdateUserDto) {
+  //   const existingUser = await this.userRepo.findOneBy({id:id});
+  //   existingUser.name = updateUserDto.name
+  //   existingUser.age = updateUserDto.age
+  //   existingUser.email = updateUserDto.email
+  //   existingUser.password = updateUserDto.password
+  //   const update = this.userRepo.save(existingUser)
+  //   return existingUser
+  // }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    const deletedArticle = this.userRepo.delete(id);
+    return ` removes article with id:#${id} from the database >>{}`
   }
+
+// this methods for auth Files
+findOneByEmail(email: string): Promise<User | null> {
+  return this.userRepo.findOneBy({ email });
+}
+
+findOneById(id: UUID): Promise<User | null> {
+  return this.userRepo.findOneBy({ id });
+}
+
+create(user: User): Promise<User> {
+  return this.userRepo.save(user);
+}
+
+update(userId: UUID, userInformation: Partial<User>): Promise<UpdateResult> {
+  return this.userRepo.update(userId, userInformation);
+}
+
+
+
+
+
+
+
 }
