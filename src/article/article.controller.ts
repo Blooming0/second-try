@@ -5,6 +5,7 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import {faker} from '@faker-js/faker'
 import { Repository } from 'typeorm';
 import { Article } from './entities/article.entity';
+
 @Controller('article')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}

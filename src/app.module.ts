@@ -13,13 +13,13 @@ import { Payment } from './payment/entities/payment.entity';
 import { UserModule } from './user/user.module';
 
 
-@Module({
+@Module({    
   imports: [
     BookingModule,// (import anything from code ) called: static registration 
     PaymentModule,
     ConfigModule.forRoot(),//(import anything out of code scope *Library*) called: dynamic registration 
     TypeOrmModule.forRoot({  
-      type: 'mysql',//نوع البيانات المستخدمه
+      type: 'postgres',//نوع البيانات المستخدمه
       host: process.env.HOST,//هذا راح يكون عباره عن رابط لقاعدة البيانات لكن في بيئة التطوير اكيد انه لوكال هوست
       port: process.env.DB_PORT as any,//as any << البورت عادتا مايكون رقم فراح يطلع لك خطأ في حال دخلته بطريقة الانفايرومنت عشان كذا خليناه 
       username: process.env.DB_USERNAME,
